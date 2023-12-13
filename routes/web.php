@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RolesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class,"index"]);
 Route::get('/login', [HomeController::class,"logIn"]);
+
+//--------------------------------------------- gestion des roles
+Route::get('/roles/index', [RolesController::class,"index"]);
+Route::post('/roles/save', [RolesController::class,"save"]);

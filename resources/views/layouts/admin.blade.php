@@ -19,7 +19,7 @@
 
     </head>
 
-    @if(1<1 == true)
+    @if(true == true)
         <body data-topbar="dark" data-layout="vertical">
         @else
         <body data-topbar="dark" data-layout="horizontal">
@@ -27,7 +27,7 @@
         <!-- Begin page -->
         <div id="layout-wrapper">
 
-            @if(1<1 == true)
+            @if(true == false)
             <header id="page-topbar">
                 <div class="navbar-header">
                     <div class="d-flex">
@@ -374,22 +374,12 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="index.html" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="assets/images/logo-sm-dark.png" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="assets/images/logo-dark.png" alt="" height="20">
-                                </span>
+                            <a href="/" class="logo logo-dark">
+                               {{env('APP_NAME')}}
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
-                                <span class="logo-sm">
-                                    <img src="assets/images/logo-sm-light.png" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="assets/images/logo-light.png" alt="" height="20">
-                                </span>
+                            <a href="/" class="logo logo-light">
+                                {{env('APP_NAME')}}
                             </a>
                         </div>
 
@@ -397,13 +387,7 @@
                             <i class="mdi mdi-backburger"></i>
                         </button>
 
-                        <!-- App Search-->
-                        <form class="app-search d-none d-lg-block">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form>
+
                     </div>
 
                     <div class="d-flex">
@@ -432,29 +416,15 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-flag-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="" src="assets/images/flags/us.jpg" alt="Header Language" height="14">
+                                <img class="" src="{{asset('images/flags/us.jpg')}}" alt="Header Language" height="14">
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <img src="assets/images/flags/spain.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">Spanish</span>
+                                    <img src="{{asset('images/flags/spain.jpg')}}" alt="user-image" class="mr-2" height="12"><span class="align-middle">Spanish</span>
                                 </a>
 
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <img src="assets/images/flags/germany.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">German</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <img src="assets/images/flags/italy.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">Italian</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <img src="assets/images/flags/russia.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">Russian</span>
-                                </a>
                             </div>
                         </div>
 
@@ -560,7 +530,7 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg"
+                                <img class="rounded-circle header-profile-user" src="{{asset('images/users/avatar-1.jpg')}}"
                                     alt="Header Avatar">
                                 <span class="d-none d-sm-inline-block ml-1">Shane</span>
                                 <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
@@ -590,41 +560,38 @@
                             <li class="menu-title">Menu</li>
 
                             <li>
-                                <a href="index.html" class="waves-effect">
+                                <a href="{{url('#')}}" class="waves-effect">
                                     <i class="mdi mdi-view-dashboard"></i><span class="badge badge-pill badge-success float-right">3</span>
                                     <span>Dashboard</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="calendar.html" class=" waves-effect">
+                                <a href="#" class=" waves-effect">
                                     <i class="mdi mdi-calendar-month"></i>
-                                    <span>Calendar</span>
+                                    <span>{{__(" Utilisateur")}}</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <a href="#" class="has-arrow waves-effect">
                                     <i class="mdi mdi-email-multiple-outline"></i>
-                                    <span>Email</span>
+                                    <span>{{__(" Utilisateur")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="email-inbox.html">Inbox</a></li>
-                                    <li><a href="email-read.html">Email Read</a></li>
-                                    <li><a href="email-compose.html">Email Compose</a></li>
+                                    <li><a href="#">{{__(" Ajouter")}}</a></li>
+                                    <li><a href="#">{{__(" Lister")}}</a></li>
                                 </ul>
                             </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="mdi mdi-account-group"></i>
-                                    <span>Authentication</span>
+                                    <span>{{__(" Roles")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="auth-login.html">Login</a></li>
-                                    <li><a href="auth-register.html">Register</a></li>
-                                    <li><a href="auth-recoverpw.html">Recover Password</a></li>
-                                    <li><a href="auth-lock-screen.html">Lock Screen</a></li>
+                                    <li><a href="{{url('roles/index')}}">{{__(" Ajouter")}}</a></li>
+                                    <li><a href="#">{{__(" Lister")}}</a></li>
                                 </ul>
                             </li>
 
