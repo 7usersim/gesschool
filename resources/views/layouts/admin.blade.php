@@ -9,7 +9,7 @@
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
-
+        @yield('css')
         <!-- Bootstrap Css -->
         <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
@@ -954,7 +954,7 @@
         <script src="{{asset('libs/metismenu/metisMenu.min.js')}}"></script>
         <script src="{{asset('libs/simplebar/simplebar.min.js')}}"></script>
         <script src="{{asset('libs/node-waves/waves.min.js')}}"></script>
-
+        @yield('js')
         <script src="{{asset('js/app.js')}}"></script>
 
     </body>

@@ -21,3 +21,6 @@ Route::get('/login', [HomeController::class,"logIn"]);
 //--------------------------------------------- gestion des roles
 Route::get('/roles/index', [RolesController::class,"index"]);
 Route::post('/roles/save', [RolesController::class,"save"]);
+Route::get('/roles/list', [RolesController::class,"liste"]);
+Route::get('/roles/edit/{id}', [RolesController::class,"edit"]);
+Route::post('/roles/update', [RolesController::class,"update"]);
