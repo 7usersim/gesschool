@@ -4,20 +4,32 @@
 <div class="row justify-content-center">
     <div class="col-lg-5">
         <div class="card">
+
             <div class="card-body p-4">
                 <div class="p-2">
+                    @include('flash-message')
                     <h5 class="mb-5 text-center">Sign in to continue to {{env('APP_NAME')}}</h5>
-                    <form class="form-horizontal" action="{{url('/singIn')}}">
+                    <form class="form-horizontal" method="POST" action="{{url('/singIn')}}">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group mb-4">
                                     <label for="username">Username</label>
-                                    <input type="text" class="form-control @error('userbname') is-invalid @enderror" value="{{old("username")}}" id="username" placeholder="Enter username">
+                                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{old("username")}}" id="username" placeholder="Enter username">
+                                    @error('username')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+				 					 @enderror
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="userpassword">Password</label>
-                                    <input type="password" value="{{old("password")}}" class="form-control @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password">
+                                    <input type="password" name="password" value="{{old("password")}}" class="form-control @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password">
+                                    @error('password')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+				 					 @enderror
                                 </div>
 
                                 <div class="row">

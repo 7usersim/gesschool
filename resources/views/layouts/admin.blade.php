@@ -7,9 +7,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
+        <meta name="csrf-token" content="{{csrf_token()}}"/>
+        <script>
+            var csrfToken = "{{csrf_token()}}";
+        </script>
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
         @yield('css')
+
+        <!-- Swet Alert Css -->
+        <link rel="stylesheet" href="{{asset('libs/sweetalert2/sweetalert2.min.css')}}" type="text/css">
         <!-- Bootstrap Css -->
         <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
@@ -167,7 +174,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="rounded-circle header-profile-user" src="{{asset('images/users/avatar-1.jpg')}}"
                                     alt="Header Avatar">
-                                <span class="d-none d-sm-inline-block ml-1">Shane</span>
+                                <span class="d-none d-sm-inline-block ml-1">{{Auth::guard('admin')->user()->first_name}}</span>
                                 <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -532,7 +539,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="rounded-circle header-profile-user" src="{{asset('images/users/avatar-1.jpg')}}"
                                     alt="Header Avatar">
-                                <span class="d-none d-sm-inline-block ml-1">Shane</span>
+                                <span class="d-none d-sm-inline-block ml-1">{{Auth::guard('admin')->user()->first_name}}</span>
                                 <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -542,7 +549,7 @@
                                 <a class="dropdown-item" href="#"><i class="mdi mdi-account-settings font-size-16 align-middle mr-1"></i> Settings</a>
                                 <a class="dropdown-item" href="#"><i class="mdi mdi-lock font-size-16 align-middle mr-1"></i> Lock screen</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle mr-1"></i> Logout</a>
+                                <a class="dropdown-item" href="{{url('/logout')}}"><i class="mdi mdi-logout font-size-16 align-middle mr-1"></i> Logout</a>
                             </div>
                         </div>
 
@@ -580,7 +587,7 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="#">{{__(" Ajouter")}}</a></li>
-                                    <li><a href="#">{{__(" Lister")}}</a></li>
+                                    <li><a href="{{url('users/index')}}">{{__(" Lister")}}</a></li>
                                 </ul>
                             </li>
 
@@ -591,7 +598,8 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{url('roles/index')}}">{{__(" Ajouter")}}</a></li>
-                                    <li><a href="#">{{__(" Lister")}}</a></li>
+                                    <li><a href="{{url('roles/list')}}">{{__(" Lister")}}</a></li>
+
                                 </ul>
                             </li>
 
@@ -954,6 +962,7 @@
         <script src="{{asset('libs/metismenu/metisMenu.min.js')}}"></script>
         <script src="{{asset('libs/simplebar/simplebar.min.js')}}"></script>
         <script src="{{asset('libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('libs/sweetalert2/sweetalert2.min.js')}}"></script>
         @yield('js')
         <script src="{{asset('js/app.js')}}"></script>
 

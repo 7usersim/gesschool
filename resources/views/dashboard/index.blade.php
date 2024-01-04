@@ -2,5 +2,4 @@
 @section("title",__("Titre Dashboard"))
 @section("title_content",__("Titre Dashboard"))
 @section('content')
-@include('flash-message')
 @endsection
