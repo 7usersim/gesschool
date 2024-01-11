@@ -533,7 +533,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        @auth('admin')
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -552,6 +552,8 @@
                                 <a class="dropdown-item" href="{{url('/logout')}}"><i class="mdi mdi-logout font-size-16 align-middle mr-1"></i> Logout</a>
                             </div>
                         </div>
+                        @endauth
+
 
                     </div>
                 </div>

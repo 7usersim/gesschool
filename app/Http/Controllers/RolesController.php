@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('is_admin');
+    }
+
     public function getListRole(Request $request){
         if($request->ajax()){
             $columns = array(

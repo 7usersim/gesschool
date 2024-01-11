@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Functions\ConfigService;
+use App\Mail\RegisterUSer;
 use App\Models\Roles;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('is_admin');
     }
     public function index(){
         $rolesList = Roles::select('id', 'role_name')->where('status_role','=','Actif')->get();
@@ -84,6 +86,8 @@ class UserController extends Controller
             $user->slug = \Str::random(100);
             $user->password = \Hash::make($request->get("password"));
             $user->save();
+
+            Mail::to($request->get("email"))->send(new RegisterUSer($user->first_name . ' '. $user->last_name));
 
             return response()->json([
                 'message' => 'User save successfully !!!',

@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,17 +18,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class,"index"]);
-Route::get('/login', [HomeController::class,"logIn"]);
+Route::get('/', [HomeController::class,"login"]);
+Route::get('/login', [HomeController::class,"logIn"])->name('login');
 Route::post('/singIn', [HomeController::class,"connexion"]);
 Route::get('/logout', [HomeController::class,"logout"]);
 
 //--------------------------------------------- gestion des roles
+
+
 Route::post('/roles/getRoles', [RolesController::class,"getListRole"]);
 Route::post('/roles/save', [RolesController::class,"save"]);
 Route::get('/roles/list', [RolesController::class,"liste"]);
 Route::get('/roles/edit/{id}', [RolesController::class,"edit"]);
 Route::post('/roles/update', [RolesController::class,"update"]);
+
 
 //--------------------------------------------- gestion des utilisateurs
 Route::get('/users/index', [UserController::class,"index"]);
