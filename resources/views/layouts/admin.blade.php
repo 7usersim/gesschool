@@ -607,6 +607,18 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="mdi mdi-account-group"></i>
+                                    <span>{{__(" Permission")}}</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    {{-- <li><a href="{{url('roles/index')}}">{{__(" Ajouter")}}</a></li> --}}
+                                    <li><a href="{{url('/permission/list')}}">{{__(" Lister")}}</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="mdi mdi-google-pages"></i>
                                     <span>Pages</span>
                                 </a>

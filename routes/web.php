@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PermissionsRolesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Models\PermissionsRoles;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +34,20 @@ Route::get('/roles/list', [RolesController::class,"liste"]);
 Route::get('/roles/edit/{id}', [RolesController::class,"edit"]);
 Route::post('/roles/update', [RolesController::class,"update"]);
 
+//--------------------------------------------- Permissions
+
+Route::post('/permission/getList', [PermissionsRolesController::class,"getListPermission"]);
+Route::post('/permission/save', [PermissionsRolesController::class,"save"]);
+Route::get('/permission/list', [PermissionsRolesController::class,"liste"]);
+Route::get('/roles/edit/{id}', [PermissionsRolesController::class,"edit"]);
+Route::post('/roles/update', [PermissionsRolesController::class,"update"]);
+
 
 //--------------------------------------------- gestion des utilisateurs
 Route::get('/users/index', [UserController::class,"index"]);
 Route::post('/users/save', [UserController::class,"save"]);
 Route::post('/users/get_users', [UserController::class,"getListUser"]);
+
 
 //--------------------------------------------- Dasboard
 Route::get('/dashboard/index', [DashboardController::class,"index"]);
