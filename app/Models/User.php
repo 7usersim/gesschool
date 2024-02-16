@@ -47,4 +47,9 @@ class User extends Authenticatable
     public function role(){
         return $this->hasOne('App\Models\Roles','roles_id');
     }
+
+    public function Filiere()
+    {
+        return $this->hasMany(Filiere::class);
+    }
 }

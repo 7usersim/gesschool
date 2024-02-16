@@ -22,7 +22,7 @@ class UserController extends Controller
     }
 
     public function save(Request $request){
-
+        //  $id = intval($request->get("cmd"));
         if(intval($request->get("cmd")) > 0){
             $v = \Validator::make($request->all(),[
                 "first_name"=>"required",
@@ -66,7 +66,7 @@ class UserController extends Controller
                 // generation du matricule MAT2023-00000
                 $users = User::count();
                 $mat = "MAT".date('Y').sprintf("%04d", (intval($users) + 1));
-
+                    
                     $user = new User();
                     $user->matricule = $mat;
             }else{
@@ -112,7 +112,7 @@ class UserController extends Controller
                 3=>'u.phone_number',
                 4=>'u.email',
                 5=> 'u.status',
-                5=> 'r.role_name'
+                6=> 'r.role_name'
             );
 
             $totalData = User::count();

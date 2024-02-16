@@ -3,36 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\PermissionsRoles;
+use App\Models\Cycle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
-class PermissionsRolesController extends Controller
+class CycleController extends Controller
 {
     public function __construct()
     {
         $this->middleware('is_admin');
     }
 
-    public function getListPermission(Request $request){
+    public function getListCycle(Request $request){
         if($request->ajax()){
             $columns = array(
-                0=>'code',
-                1=>'name',
+                0=>'name',
+                1=>'code',
+                2=>'description',
             );
 
-            $totalData = PermissionsRoles::count();
+            $totalData = Cycle::count();
             $limit = $request->input('length');
             $start = $request->input('start');
             $order = $columns[$request->input('order.0.column')];
             $dir = $request->input('order.0.dir');
 
-            $req = " SELECT id AS id, code AS code, name AS name FROM permissions_roles WHERE 1=1 ";
+            $req = " SELECT id AS id,name AS name, code AS code, description AS description FROM gsc_cycle WHERE 1=1 ";
 
             if(!empty($request->input('search.value'))){
                 $get_search = $request->input('search.value');
-                $req .= ' AND (code LIKE "%'.htmlspecialchars($get_search).'%" OR name LIKE "%'.htmlspecialchars($get_search).'%")';
+                $req .= ' AND (name LIKE "%'.htmlspecialchars($get_search).'%" OR code LIKE "%'.htmlspecialchars($get_search).'%" OR description LIKE "%'.htmlspecialchars($get_search).'%")';
             }
 
             $req .= ' ORDER BY '. $order.' '.$dir.' LIMIT '.$limit. ' OFFSET '. $start;
@@ -44,9 +44,10 @@ class PermissionsRolesController extends Controller
 
             if(!is_null($listPermissions)){
                 foreach($listPermissions as $item){
-                    $needData['code'] = $item->code;
                     $needData['name'] = $item->name;
-                    $needData['options'] = "<a href='#' title=' Update permission' onclick='edit(".json_encode($item).")' class='btn btn-sm btn-primary btnUpdate'> <i clqss='fa fa-edit'></i> Edit</a> ";
+                    $needData['code'] = $item->code;
+                    $needData['description'] = $item->description;
+                    $needData['options'] = "<a href='#' title=' Update cycle' onclick='edit(".json_encode($item).")' class='btn btn-sm btn-primary btnUpdate'> <i clqss='fa fa-edit'></i> Edit</a> ";
 
                     $data[] = $needData;
                 }
@@ -69,13 +70,16 @@ class PermissionsRolesController extends Controller
 
         if($id == 0){
             $V = \Validator::make($request->all(), [
-                "code" => "required|unique:permissions_roles,code",
-                "name" => "required|unique:permissions_roles,name",
+                "name" => "required|max:20|unique:gsc_cycle,name",
+                "code" => "required|max:8|unique:gsc_cycle,code",
+                "description" => "required|max:30|unique:gsc_cycle,description",
             ]);
         } else{
             $V = \Validator::make($request->all(), [
-                "code" => "required|unique:permissions_roles,code,".$id,
-                "name" => "required|unique:permissions_roles,name,".$id,
+                "name" => "required|max:20|unique:gsc_cycle,name,".$id,
+                "code" => "required|max:8|unique:gsc_cycle,code,".$id,
+                "description" => "required|max:30|unique:gsc_cycle,description,".$id,
+
             ]);
         }
 
@@ -88,25 +92,26 @@ class PermissionsRolesController extends Controller
         }
 
         if($id == 0){
-            $permission = new PermissionsRoles();
+            $permission = new Cycle();
         }else{
 
-            $permission = PermissionsRoles::where('id','=',$id)->first();
+            $permission = Cycle::where('id','=',$id)->first();
         }
 
 
-        $permission->code = $request->code;
         $permission->name = $request->name;
+        $permission->code = $request->code;
+        $permission->description = $request->description;
 
         $permission->save();
         if($id == 0 ){
             return response()->json([
-                'success' => "Permission save Successfully",
+                'success' => "cycle save Successfully",
                 'error' => false
             ], 200);
         }else{
             return response()->json([
-                'success' => "Permission update Successfully",
+                'success' => "cycle update Successfully",
                 'error' => false
             ], 200);
         }
@@ -116,8 +121,8 @@ class PermissionsRolesController extends Controller
     }
 
     public function liste(){
-        $listes = PermissionsRoles::select("id",'code','name')->get();
-        return view("permissions.index",compact("listes"));
+        $listes = Cycle::select("id",'name','code','description')->get();
+        return view("cycle.index",compact("listes"));
     }
 
     // public function edit($id = null){
@@ -127,21 +132,21 @@ class PermissionsRolesController extends Controller
 
     public function update(Request $request){
 
-        $permission = PermissionsRoles::select('id','code','name')->where('id','=',(int)$request->cmd)->first();
+        $permission = Cycle::select('id','name','code','description')->where('id','=',(int)$request->cmd)->first();
 
         if(is_null($permission)){
-            return redirect('/permission/list')->with([
-                'message'=>' The Permissions is wrong ',
+            return redirect('/cycle/list')->with([
+                'message'=>' The cycle is wrong ',
                 'info'=>true,
             ]);
         }
-        $permission->code = $request->code;
         $permission->name = $request->name;
+        $permission->code = $request->code;
+        $permission->description = $request->description;
         $permission->save();
-        return redirect('/permission/list')->with([
-            'message'=>' Permission update successfully !!!',
+        return redirect('/cycle/list')->with([
+            'message'=>' cycle update successfully !!!',
             'success'=> true,
         ]);
     }
 }
-

@@ -574,18 +574,10 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-
-                            <li>
-                                <a href="#" class=" waves-effect">
-                                    <i class="mdi mdi-calendar-month"></i>
-                                    <span>{{__(" Utilisateur")}}</span>
-                                </a>
-                            </li>
-
                             <li>
                                 <a href="#" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-email-multiple-outline"></i>
-                                    <span>{{__(" Utilisateur")}}</span>
+                                    <i class="fa fa-user-plus"></i>
+                                    <span>{{__(" Users")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="#">{{__(" Ajouter")}}</a></li>
@@ -595,7 +587,7 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-account-group"></i>
+                                    <i class="fas fa-tasks"></i>
                                     <span>{{__(" Roles")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
@@ -607,164 +599,88 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-account-group"></i>
+                                    <i class="fas fa-back"></i>
                                     <span>{{__(" Permission")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    {{-- <li><a href="{{url('roles/index')}}">{{__(" Ajouter")}}</a></li> --}}
                                     <li><a href="{{url('/permission/list')}}">{{__(" Lister")}}</a></li>
 
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-google-pages"></i>
-                                    <span>Pages</span>
+                                    <i class="mdi mdi-school"></i>
+                                    <span>{{__("Etablissement")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="pages-starter.html">Starter Page</a></li>
-                                    <li><a href="pages-maintenance.html">Maintenance</a></li>
-                                    <li><a href="pages-comingsoon.html">Coming Soon</a></li>
-                                    <li><a href="pages-timeline.html">Timeline</a></li>
-                                    <li><a href="pages-gallery.html">Gallery</a></li>
-                                    <li><a href="pages-faqs.html">FAQs</a></li>
-                                    <li><a href="pages-pricing.html">Pricing</a></li>
-                                    <li><a href="pages-404.html">Error 404</a></li>
-                                    <li><a href="pages-500.html">Error 500</a></li>
+                                    {{-- <li><a href="{{url('roles/index')}}">{{__(" Ajouter")}}</a></li> --}}
+                                    <li><a href="{{url('/etablissement/index')}}">{{__(" Lister")}}</a></li>
+
                                 </ul>
                             </li>
-
-                            <li class="menu-title">Components</li>
-
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-format-underline"></i>
-                                    <span>Bootstrap UI</span>
+                                    <i class="fas fa-layer-group"></i>
+                                    <span>{{__("Cycle")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="ui-alerts.html">Alerts</a></li>
-                                    <li><a href="ui-badge.html">Badge</a></li>
-                                    <li><a href="ui-buttons.html">Buttons</a></li>
-                                    <li><a href="ui-cards.html">Cards</a></li>
-                                    <li><a href="ui-dropdowns.html">Dropdowns</a></li>
-                                    <li><a href="ui-navs.html">Navs</a></li>
-                                    <li><a href="ui-tabs-accordions.html">Tabs &amp; Accordions</a></li>
-                                    <li><a href="ui-modals.html">Modals</a></li>
-                                    <li><a href="ui-images.html">Images</a></li>
-                                    <li><a href="ui-progressbars.html">Progress Bars</a></li>
-                                    <li><a href="ui-pagination.html">Pagination</a></li>
-                                    <li><a href="ui-popover-tooltips.html">Popover & Tooltips</a></li>
-                                    <li><a href="ui-spinner.html">Spinner</a></li>
-                                    <li><a href="ui-carousel.html">Carousel</a></li>
-                                    <li><a href="ui-video.html">Video</a></li>
-                                    <li><a href="ui-typography.html">Typography</a></li>
-                                    <li><a href="ui-grid.html">Grid</a></li>
+                                    {{-- <li><a href="{{url('roles/index')}}">{{__(" Ajouter")}}</a></li> --}}
+                                    <li><a href="{{url('/cycle/list')}}">{{__(" Lister")}}</a></li>
+
                                 </ul>
                             </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-package-variant-closed"></i>
-                                    <span>Advanced UI</span>
+                                    <i class="fas fa-code-branch"></i>
+                                    <span>{{__("Filiere")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="advanced-alertify.html">Alertify</a></li>
-                                    <li><a href="advanced-rating.html">Rating</a></li>
-                                    <li><a href="advanced-nestable.html">Nestable</a></li>
-                                    <li><a href="advanced-rangeslider.html">Range Slider</a></li>
-                                    <li><a href="advanced-sweet-alert.html">Sweet-Alert</a></li>
-                                    <li><a href="advanced-lightbox.html">Lightbox</a></li>
-                                    <li><a href="advanced-maps.html">Maps</a></li>
+                                    <li><a href="{{url('/filiere/index')}}">{{__(" Lister")}}</a></li>
+
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-black-mesa"></i>
-                                    <span>Icons</span>
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                    <span>{{__("Classes")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="icons-materialdesign.html">Material Design</a></li>
-                                    <li><a href="icons-dripicons.html">Dripicons</a></li>
-                                    <li><a href="icons-fontawesome.html">Font Awesome 5</a></li>
-                                    <li><a href="icons-themify.html">Themify</a></li>
+                                    <li><a href="{{url('/class/index')}}">{{__(" Lister")}}</a></li>
+
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-table-settings"></i>
-                                    <span>Tables</span>
+                                    <i class="fa fa-user-graduate"></i>
+                                    <span>{{__("Students")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="tables-basic.html">Basic Tables</a></li>
-                                    <li><a href="tables-datatable.html">Data Tables</a></li>
-                                    <li><a href="tables-responsive.html">Responsive Table</a></li>
-                                    <li><a href="tables-editable.html">Editable Table</a></li>
+                                    <li><a href="{{url('/student/liste')}}">{{__(" Lister")}}</a></li>
+                                    <li><a href="{{url('/student/classlist')}}">{{__(" Classes")}}</a></li>
+
                                 </ul>
                             </li>
-
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="mdi mdi-file-document-box-check-outline"></i>
-                                    <span class="badge badge-pill badge-danger float-right">07</span>
-                                    <span>Forms</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="form-elements.html">Form Elements</a></li>
-                                    <li><a href="form-validation.html">Form Validation</a></li>
-                                    <li><a href="form-advanced.html">Form Advanced</a></li>
-                                    <li><a href="form-editors.html">Form Editors</a></li>
-                                    <li><a href="form-uploads.html">Form File Upload</a></li>
-                                    <li><a href="form-mask.html">Form Mask</a></li>
-                                    <li><a href="form-summernote.html">Summernote</a></li>
-                                </ul>
-                            </li>
-
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-poll"></i>
-                                    <span>Charts</span>
+                                    <i class="fas fa-wallet"></i>
+                                    <span>{{__("Fees")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="charts-morris.html">Morris</a></li>
-                                    <li><a href="charts-apex.html">Apex</a></li>
-                                    <li><a href="charts-chartist.html">Chartist</a></li>
-                                    <li><a href="charts-chartjs.html">Chartjs</a></li>
-                                    <li><a href="charts-flot.html">Flot</a></li>
-                                    <li><a href="charts-sparkline.html">Sparkline</a></li>
-                                    <li><a href="charts-knob.html">Jquery Knob</a></li>
+                                    <li><a href="{{url('/fees/index')}}">{{__("List")}}</a></li>
+                                    <li><a href="{{url('/fees/historique')}}">{{__("Historique")}}</a></li>
+
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-flip-horizontal"></i>
-                                    <span>Layouts</span>
+                                    <i class="fas fa-book-reader"></i>
+                                    <span>{{__("Courses")}}</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="layouts-light-sidebar.html">Light Sidebar</a></li>
-                                    <li><a href="layouts-sidebar-sm.html">Small Sidebar</a></li>
-                                    <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>
-                                    <li><a href="layouts-dark-topbar.html">Dark Topbar</a></li>
-                                    <li><a href="layouts-boxed.html">Boxed Layout</a></li>
-                                </ul>
-                            </li>
+                                    <li><a href="{{url('/courses/index')}}">{{__("List")}}</a></li>
+                                    <li><a href="{{url('/courses/courses')}}">{{__("Courses")}}</a></li>
 
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-share-variant"></i>
-                                    <span>Multi Level</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="javascript: void(0);">Level 1.1</a></li>
-                                    <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                                        <ul class="sub-menu" aria-expanded="true">
-                                            <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                            <li><a href="javascript: void(0);">Level 2.2</a></li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </li>
 
@@ -798,13 +714,6 @@
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0 font-size-18">@yield('title_content')</h4>
-
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item active"> <i class="fa fa-home"></i> Home</li>
-                                        </ol>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

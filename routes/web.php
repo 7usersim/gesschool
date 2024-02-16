@@ -1,11 +1,20 @@
 <?php
 
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\CoursesByClassController;
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\CycleController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EtablissementController;
+use App\Http\Controllers\FeesController;
+use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionsRolesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Models\Etablissement;
 use App\Models\PermissionsRoles;
 use Illuminate\Support\Facades\Route;
 
@@ -39,8 +48,8 @@ Route::post('/roles/update', [RolesController::class,"update"]);
 Route::post('/permission/getList', [PermissionsRolesController::class,"getListPermission"]);
 Route::post('/permission/save', [PermissionsRolesController::class,"save"]);
 Route::get('/permission/list', [PermissionsRolesController::class,"liste"]);
-Route::get('/roles/edit/{id}', [PermissionsRolesController::class,"edit"]);
-Route::post('/roles/update', [PermissionsRolesController::class,"update"]);
+// Route::get('/roles/edit/{id}', [PermissionsRolesController::class,"edit"]);
+// Route::post('/roles/update', [PermissionsRolesController::class,"update"]);
 
 
 //--------------------------------------------- gestion des utilisateurs
@@ -48,6 +57,66 @@ Route::get('/users/index', [UserController::class,"index"]);
 Route::post('/users/save', [UserController::class,"save"]);
 Route::post('/users/get_users', [UserController::class,"getListUser"]);
 
+//----------------------------------------------------gestion etablissement
+Route::get('/etablissement/index', [EtablissementController::class, 'index']);
+Route::post('/etablissement/save', [EtablissementController::class, 'save']);
+Route::post('/etablissement/getList', [EtablissementController::class, 'getList']);
+Route::get('/config/edit/{id}', [EtablissementController::class, 'edit']);
+
+//-----------------------------------------------gestion de cycle
+Route::post('/cycle/getList', [CycleController::class,"getListCycle"]);
+Route::post('/cycle/save', [CycleController::class,"save"]);
+Route::get('/cycle/list', [CycleController::class,"liste"]);
+
+//------------------------------------------------gestion filiere
+Route::get('/filiere/index', [FiliereController::class,"index"]);
+Route::post('/filiere/save', [FiliereController::class,"save"]);
+Route::post('/filiere/getFiliere', [FiliereController::class,"getlistFiliere"]);
+Route::post('/filiere/getCycle', [FiliereController::class,"getCycle"]);
+
+//------------------------------------------------gestion classe
+Route::get('/class/index', [ClasseController::class,"index"]);
+Route::post('/class/save', [ClasseController::class,"save"]);
+Route::post('/class/getClass', [ClasseController::class,"getlistClass"]);
+Route::post('/class/getAll', [ClasseController::class,"getAll"]);
+
+//---------------------------------------------------gestion eleves
+Route::get('/student/liste',[StudentController::class,"index"]);
+Route::get('/student/getFiliereByCycle',[StudentController::class,"getFiliereByCycle"]);
+Route::get('/student/getClassByField',[StudentController::class,"getClassByField"]);
+Route::post('/student/save',[StudentController::class,"save"]);
+Route::post('/student/getStudent',[StudentController::class,"getStudent"]);
+Route::post('/student/getAll',[StudentController::class,"getAll"]);
+Route::get('/student/classlist',[StudentController::class,"getClassList"]);
+Route::post('/student/AllStudent',[StudentController::class,"AllStudent"]);
+
+//----------------------------------------------------------gestion payement
+Route::get('/fees/index', [FeesController::class,"index"]);
+Route::post('/fees/save', [FeesController::class,"save"]);
+Route::post('/fees/getFees', [FeesController::class,"getlistFees"]);
+Route::post('/class/getAllFees', [FeesController::class,"getAllStudenstFees"]);
+Route::get('/student/getFiliereByCycle',[FeesController::class,"getFiliereByCycle"]);
+Route::get('/student/getClassByField',[FeesController::class,"getClassByField"]);
+Route::get('/student/getStudentByClass',[FeesController::class,"getStudentsByClasses"]);
+Route::post('/student/historiqueFees',[FeesController::class,"listHistorique"]);
+Route::get('/fees/historique',[FeesController::class,"Historique"]);
+Route::post('/student/getStudentName',[FeesController::class,"getStudentName"]);
+
+//-------------------------------------------------------gestion des cours
+
+Route::get('/courses/index', [CoursesController::class,"index"]);
+Route::post('/courses/save', [CoursesController::class,"save"]);
+Route::post('/courses/getCourses', [CoursesController::class,"getlistCourses"]);
+
+//------------------------------------------------------repartion des cours par classes
+Route::get('/courses/courses', [CoursesByClassController::class,"index"]);
+Route::post('/coursesClass/save', [CoursesByClassController::class,"save"]);
+Route::post('/courses/getCoursesByClass', [CoursesByClassController::class,"getlistCoursesByClass"]);
+
+
+
+
+Route::get('config/listeConfig',[EtablissementController::class, 'listeConfig']);
 
 //--------------------------------------------- Dasboard
 Route::get('/dashboard/index', [DashboardController::class,"index"]);

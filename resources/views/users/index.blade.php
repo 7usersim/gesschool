@@ -153,8 +153,8 @@
         serverSide:true,
         ajax:{
             url:"{{url('users/get_users')}}",
-            dataType:'json',
             type:'POST',
+            dataType:'json',
             data:{_token:csrfToken}
         },
         columns:[
@@ -169,15 +169,61 @@
         ]
     });
 
+    function sweet(){
+        var t;
+                        Swal.fire({
+                            title: " Loading...",
+                            html: "<strong></strong> seconds.",
+                            timer: 2e3,
+                            onBeforeOpen: function() {
+                                Swal.showLoading(),
+                                t = setInterval(function() {
+                                    // Swal.getContent().querySelector("strong").textContent = Swal.getTimerLeft();
+                                }, 10000)
+                            },
+                            onClose: function() {
+                                clearInterval(t)
+                            }
+                        }).then(function(t) {
+                            t.dismiss === Swal.DismissReason.timer
+                        });
+                    }
+
+    function cleanInput(){
+        var role = $('#role').val();
+        var cmd = $('#idCmd').val('');
+        var first_name = $('#firstname').val('');
+        var last_name = $('#lastname').val('');
+        var country = $('#country').val('');
+        var city = $('#city').val('');
+        var adress = $('#adress').val('');
+        var phone = $('#phone').val('');
+        var email = $('#email').val('');
+        var username = $('#username').val('');
+        var password = $('#password').val('');
+        var confirm_password = $('#confirm_password').val('');
+        var status = $('#status').val('');
+    }
+
     function edit(role){
-        $('#roleName').val(role.Role);
-        $('#roleCode').val(role.Code);
-        $('#status').val(role.Status);
-        $('#formRoleID').modal({show:true, keyboard:false, backdrop:'static'});
+        $('#idCmd').val(role.id);
+        $('#firstname').val(role.firstname);
+        $('#lastname').val(role.lastname);
+        $('#country').val(role.country);
+        $('#city').val(role.city);
+        $('#adress').val(role.adress);
+        $('#phone').val(role.phone);
+        $('#email').val(role.email);
+        $('#username').val(role.username);
+        $('#password').val(role.password);
+        $('#confirm_password').val(role.confirm_password);
+        $('#status').val(role.status);
+        $('#formUserID').modal({show:true, keyboard:false, backdrop:'static'});
     }
 
         $(document).ready(function(){
             $('.add').click(function(){
+                cleanInput();
                 $('#formUserID').modal({show:true, keyboard:false, backdrop:'static'});
             });
 
@@ -192,7 +238,7 @@
                         title:' Enregistrement user',
                         text: ' Are you whant to save this user?',
                         icon: 'info',
-                        showCancelButton:true,
+                        xshowCancelButton:true,
                         confirmButtonColor:'#3085d6',
                         cancelButtonColor: '#d33',
                         confirmButtonText: ' Yes, save it !',
@@ -221,6 +267,7 @@
                                         });
                                 $('#passwordHelp').html("password and confirm is not match").css("color","red");
                             }else{
+                                sweet();
                                     $.ajax({
                                     'type':'POST',
                                     'url': '/users/save',
@@ -248,7 +295,8 @@
                                                 icon:'success'
                                             });
                                             table.ajax.reload();
-                                            $('#formRoleID').modal('hide');
+                                            cleanInput();
+                                            $('#formUserID').modal('hide');
                                         }
                                     },
                                     error:function(error){
