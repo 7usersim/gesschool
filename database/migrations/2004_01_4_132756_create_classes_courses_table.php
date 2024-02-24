@@ -14,12 +14,14 @@ class CreateClassesCoursesTable extends Migration
     public function up()
     {
         Schema::create('gsc_classes_courses', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->integer('credit');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('class_id');
+            $table->unsignedBigInteger('teacher_id');
             $table->foreign('course_id')->references('id')->on('gsc_courses')->onDelete('cascade');
             $table->foreign('class_id')->references('id')->on('gsc_classes')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('gsc_users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class CreateClassesCoursesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes_courses');
+        Schema::dropIfExists('gsc_classes_courses');
     }
 }

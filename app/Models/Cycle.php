@@ -12,9 +12,9 @@ class Cycle extends Model
     public function Filiere(){
         return $this->hasMany('App\Models\Filiere','cycle_id');
     }
-    
+
     public function Student(){
-        $this->hasMany("App\Models\Student",'id_cycle' );
+        return $this->hasMany("App\Models\Student",'id_cycle' );
 
       }
 }

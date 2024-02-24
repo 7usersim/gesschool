@@ -14,7 +14,7 @@ class CreateCyclesTable extends Migration
     public function up()
     {
         Schema::create('gsc_cycle', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name');
             $table->string('code')->unique();
             $table->text('description')->nullable();
@@ -30,6 +30,6 @@ class CreateCyclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cycles');
+        Schema::dropIfExists('gsc_cycle');
     }
 }

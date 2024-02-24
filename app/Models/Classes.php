@@ -25,4 +25,10 @@ class Classes extends Model
     {
         return $this->belongsToMany(Courses::class);
     }
+    public function classes(){
+        return $this->hasOne('App\Models\FraisDeScolarite','class_id');
+    }
+    public function TimeTable(){
+        return $this->hasMany(TimeTable::class);
+    }
 }

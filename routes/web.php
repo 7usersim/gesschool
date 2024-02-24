@@ -6,12 +6,15 @@ use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\CycleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EtablissementController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\FeesController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\PermissionsRolesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TimeTableController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Models\Etablissement;
@@ -89,6 +92,11 @@ Route::post('/student/getStudent',[StudentController::class,"getStudent"]);
 Route::post('/student/getAll',[StudentController::class,"getAll"]);
 Route::get('/student/classlist',[StudentController::class,"getClassList"]);
 Route::post('/student/AllStudent',[StudentController::class,"AllStudent"]);
+Route::get('/student/getStudentByClass',[StudentController::class,"getStudentsByClasses"]);
+Route::get('/student/getCoursesByClass', [StudentController::class,"getCoursesByClass"]);
+Route::get('/student/getListClassNoteSearch', [StudentController::class,"getListClassNoteSearch"]);
+
+
 
 //----------------------------------------------------------gestion payement
 Route::get('/fees/index', [FeesController::class,"index"]);
@@ -98,6 +106,7 @@ Route::post('/class/getAllFees', [FeesController::class,"getAllStudenstFees"]);
 Route::get('/student/getFiliereByCycle',[FeesController::class,"getFiliereByCycle"]);
 Route::get('/student/getClassByField',[FeesController::class,"getClassByField"]);
 Route::get('/student/getStudentByClass',[FeesController::class,"getStudentsByClasses"]);
+Route::get('/fees/getFeesByClasses',[FeesController::class,"getFeesByClasses"]);
 Route::post('/student/historiqueFees',[FeesController::class,"listHistorique"]);
 Route::get('/fees/historique',[FeesController::class,"Historique"]);
 Route::post('/student/getStudentName',[FeesController::class,"getStudentName"]);
@@ -112,6 +121,30 @@ Route::post('/courses/getCourses', [CoursesController::class,"getlistCourses"]);
 Route::get('/courses/courses', [CoursesByClassController::class,"index"]);
 Route::post('/coursesClass/save', [CoursesByClassController::class,"save"]);
 Route::post('/courses/getCoursesByClass', [CoursesByClassController::class,"getlistCoursesByClass"]);
+
+
+//-------------------------------------------------------------------gestion des evaluations
+Route::post('/exam/getList', [EvaluationController::class,"getListExam"]);
+Route::post('/exam/save', [EvaluationController::class,"save"]);
+Route::get('/exam/list', [EvaluationController::class,"liste"]);
+Route::get('/notes/all', [NoteController::class,"index"]);
+Route::post('/notes/getList', [NoteController::class,"getListNote"]);
+Route::post('/notes/save', [NoteController::class,"save"]);
+Route::get('/notes/getNoteDetails', [NoteController::class,"getNoteDetails"]);
+Route::get('/note/getCoursesByClass', [NoteController::class,"getCoursesByClass"]);
+Route::get('/evaluation/getStudent', [NoteController::class,"getStudentsByClasses"]);
+Route::post('/evaluation/SearchNoteByClasse', [NoteController::class,"SearchNoteByClasse"]);
+Route::get('/evaluation/ListClassNote', [NoteController::class,"ListClassNote"]);
+
+
+//---------------------------------------------------------gestion des emplois du temps
+Route::get('/time/all', [TimeTableController::class,"index"]);
+Route::post('/time/getList', [TimeTableController::class,"getListTime"]);
+Route::post('/time/save', [TimeTableController::class,"save"]);
+Route::get('/note/getCoursesByClass', [TimeTableController::class,"getCoursesByClass"]);
+Route::get('/time/TimeList', [TimeTableController::class,"TimeList"]);
+Route::post('/time/AllTimeList', [TimeTableController::class,"AllTimeTable"]);
+
 
 
 

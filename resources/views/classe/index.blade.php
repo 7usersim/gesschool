@@ -24,7 +24,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Capacity</th>
+                    <th scope="col">School fees</th>
                     <th scope="col">Titulaire</th>
                     <th scope="col">Field</th>
                     <th scope="col">Options</th>
@@ -74,8 +74,8 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="capacity "> Capacity</label>
-                        <input type="number" name="capacity" required class="form-control" id="capacity" placeholder="{{__('Enter value')}}">
+                        <label for="schoolfees ">School fees</label>
+                        <input type="number" name="school_fees" required class="form-control" id="school_fees" placeholder="{{__('Enter value')}}">
                       </div>
                         <div class="form-group col-md-6">
                             <label for="name">Name</label>
@@ -115,7 +115,7 @@
         },
         columns:[
             {'data':'name'},
-            {'data':'capacity'},
+            {'data':'school_fees'},
             {'data':'titulaire'},
             {'data':'field'},
             {'data':'options'}
@@ -144,7 +144,7 @@ var t;
 
     function cleanInput(){
         $('#name').val('');
-        $('#capacity').val('');
+        $('#school_fees').val('');
         $('#titulaire').val('');
         $('#cmd').val('');
         $('#field').val('');
@@ -152,10 +152,10 @@ var t;
          }
 
     function edit(classe){
-        
+
         $('#cmd').val(classe.id);
         $('#name').val(classe.NameClass);
-        $('#capacity').val(classe.Capacity);
+        $('#school_fees').val(classe.SchoolFees);
         $('#titulaire').val(classe.UserID);
         $('#field').val(classe.IDField);
         $('#formFieldID').modal({show:true, keyboard:false, backdrop:'static'});
@@ -186,7 +186,7 @@ var t;
                     }).then((result) =>{
                         if(result.value === true){
                             var name = $('#name').val();
-                            var capacity = $('#capacity').val();
+                            var school_fees = $('#school_fees').val();
                             var titulaire = $('#titulaire').val();
                             var cmd = $('#cmd').val();
                             var field = $('#field').val();
@@ -197,7 +197,7 @@ var t;
                                     data:{
                                         cmd:parseInt(cmd),
                                         name:name,
-                                        capacity:capacity,
+                                        schoolFees:school_fees,
                                         titulaireID:parseInt(titulaire),
                                         fieldID:parseInt(field),
                                         },

@@ -23,13 +23,12 @@
             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <thead>
                   <tr>
-                    <th scope="col">Amount</th>
+                      <th scope="col">Class</th>
                     <th scope="col">Paid</th>
                     <th scope="col">Left to pay</th>
                     <th scope="col">Status</th>
                     <th scope="col">Method</th>
                     <th scope="col">Name</th>
-                    {{-- <th scope="col">Historique</th> --}}
                     <th scope="col">Options</th>
                   </tr>
                 </thead>
@@ -67,33 +66,29 @@
                         <div class="form-group col-md-4">
                             <label for="student">{{__(" Student")}}</label>
                             <select name="student" id="student" class="form-control">
-                            <option value="" disabled selected>{{__('Select a student')  }}</option>
-                                {{-- @foreach ($studentList as $student)
-                                <option value="{{$student->id}}">{{$student->matricule}}</option>
-                                @endforeach --}}
+                             <option value="" disabled selected>{{__('Select a student')  }}</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="amount"> Amount</label>
-                            <input type="number" name="amount" required class="form-control" id="amount" placeholder="{{__('Enter value')}}">
+                        <div class="form-group col-md-4 ">
+                            <label for="school fees">{{__(" School fees")}}</label>
+                            <input type="text" name="amount" id="amount" class="form-control" readonly>
                         </div>
-
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="paid"> Paid</label>
-                        <input type="number" name="paid" required class="form-control" id="paid" placeholder="{{__('Enter value')}}">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="left_to_paiy">Amount to pay</label>
-                        <input type="number" name="left_to_pay" required class="form-control" id="left_to_pay" placeholder="{{__('Enter value')}}" readonly>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="paid"> Paid</label>
+                            <input type="number" name="paid" required class="form-control" id="paid" placeholder="{{__('Enter value')}}">
                         </div>
-                    <div class="form-group col-md-4 ">
-                        <label for="Status">{{__(" Status")}}</label>
-                        <select name="payment_status" id="payment_status" class="form-control">
-                            <option value="" disabled selected>{{__('Select a status')  }}</option>
-                        </select>
-                    </div>
+                        <div class="form-group col-md-4">
+                            <label for="left_to_pay">Amount to pay</label>
+                            <input type="number" name="left_to_pay" required class="form-control" id="left_to_pay" placeholder="{{__('Enter value')}}" readonly>
+                            </div>
+                        <div class="form-group col-md-4 ">
+                            <label for="Status">{{__(" Status")}}</label>
+                            <select name="payment_status" id="payment_status" class="form-control">
+                                <option value="" disabled selected>{{__('Select a status')  }}</option>
+                            </select>
+                        </div>
 
                 </div>
                 <div class="form-row">
@@ -103,6 +98,9 @@
                             <option value="" disabled selected>{{__('Select a method')  }}</option>
                             <option value="espece">{{__('Espece')  }}</option>
                             <option value="cheque">{{__('Cheque')  }}</option>
+                            <option value="om">{{__('Orange Money')  }}</option>
+                            <option value="mobile">{{__('Mobile Money')  }}</option>
+                            <option value="eu">{{__('Express Union')  }}</option>
                         </select>
                     </div>
 
@@ -124,6 +122,43 @@
          </div>
         </div>
       </div>
+
+      <div class="modal" tabindex="-1" role="dialog" id="formHistorique" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-primary ">
+              <h5 class="modal-title text-white">Historique</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead class=" bg-info text-white">
+                            <tr>
+                                {{-- <th data-priority="1">Class</th> --}}
+                                <th data-priority="3">Paid</th>
+                                <th data-priority="1">Left to pay</th>
+                                <th data-priority="3">Payment Date</th>
+                                <th data-priority="3">Method</th>
+                                <th data-priority="6">Reference</th>
+                                <th data-priority="6">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tabcontent">
+
+                           </tbody>
+                        </table>
+                    </div>
+
+                </div>
+             </div>
+             </div>
+            </div>
+          </div>
+
     </div>
   </div>
 </div>
@@ -147,13 +182,12 @@
             data:{_token:csrfToken}
         },
         columns:[
-            {'data':'amount'},
+            {'data':'class'},
             {'data':'paid'},
             {'data':'left_to_pay'},
             {'data':'payment_status'},
             {'data':'payment_method'},
             {'data':'student'},
-            // {'data':'left_to_pay'},
             {'data':'options'}
         ]
     });
@@ -183,16 +217,15 @@
             $('#student').val('');
             $('#payment_date').val('');
             $('#payment_reference').val('');
-            $('#amount').val('');
+            // $('#amount').val('');
             $('#paid').val('');
             $('#left_to_pay').val('');
             $('#payment_status').val('');
             $('#payment_method').val('');
-            $('#student').val('');
+            $('#classe').val('');
          }
 
          function edit(fees){
-
             // console.log(fees);
             $("#cmd").val(fees.id);
             $('#payment_date').val(fees.PaymentDate);
@@ -203,56 +236,43 @@
             $('#payment_status').val(fees.PaymentStatus);
             $('#payment_method').val(fees.PaymentMethod);
             $('#student').val(fees.idStudent);
+            $('#classe').val(fees.IDClass);
             $('#formFieldID').modal({show:true, keyboard:false, backdrop:'static'});
 
          }
 
+         function historique(student){
+            // console.log(student.idStudent);
+            $.ajax({
+            type: "POST",
+            url: "/student/historiqueFees",
+            dataType:'json',
+            data:{'id':student.idStudent},
+            headers:{'X-CSRF-Token':csrfToken},
+            success: function(results) {
+                var resultTable = $("#tabcontent");
+                resultTable.empty();
+                let historique = JSON.parse(results.ListHistorique.historique);
+                console.log(historique);
+                historique.forEach(data => {
+                content = `<tr>
 
-         $("#cycle").on('change', function(){
-                        var selectedCycle = $(this).val();
-                        $.ajax({
-                            url:'/student/getFiliereByCycle',
-                            type:'GET',
-                            data:{optionA: selectedCycle},
-                            success:function(optionB){
-                                var selectedField = $("#field");
-                                selectedField.empty();
-                                selectedField.append(`<option value="" selected disabled>Select a field</option>`);
-                                $('#classe').empty();
-                                $('#student').empty();
-                                $('#classe').append(`<option value="" selected disabled>Select a class</option>`);
-                                optionB.fieldList.forEach(data =>{
-                                    content = `<option value='${data.id}'>${data.nom}</option>`;
-                                    $('#field').append(content);
-                                });
-                            },
-                            error:function(error){
-                                console.log("error:",error);
-                            }
-                        });
-                    });
+                <td>${data.paid}</td>
+                <td>${data.left_to_pay}</td>
+                <td>${data.payment_date}</td>
+                <td>${data.payment_method}</td>
+                <td>${data.payment_reference}</td>
+                <td>${data.payment_status}</td>
+                </tr>`;
+                resultTable.append(content);
 
-
-                $("#field").on('change',function(){
-                    var selectedField = $(this).val();
-                    $.ajax({
-                        url:'/student/getClassByField',
-                        type:'GET',
-                        data:{selectedField:selectedField},
-                        success:function(optionC){
-                            var selectedClass = $('#classe');
-                            selectedClass.empty();
-                            selectedClass.append(`<option value="" selected disabled>Select a class</option>`);
-                            optionC.classesList.forEach(data =>{
-                                content =`<option value='${data.id}'>${data.name}</option>`;
-                                $('#classe').append(content);
-                            })
-                        },
-                        error:function(error){
-                            console.log("error:",error);
-                        }
-                    });
                 });
+               }
+          });
+
+            $('#formHistorique').modal({show:true, keyboard:false, backdrop:'static'});
+
+         }
 
                 $("#classe").on('change',function(){
                     var selectedClass = $(this).val();
@@ -261,7 +281,7 @@
                         type:'GET',
                         data:{selectedClass:selectedClass},
                         success:function(optionD){
-                            var selectedStudent = $('#student');
+                            var selectedStudent = $('student');
                             selectedStudent.empty();
                             selectedStudent.append(`<option value="" selected disabled>Select a student</option>`);
                             optionD.studentList.forEach(data =>{
@@ -275,9 +295,25 @@
                     });
                 });
 
-
+                $("#classe").on('change', function () {
+                    var selectedClass = $(this).val();
+                    $.ajax({
+                        url: '/fees/getFeesByClasses',
+                        type: 'GET',
+                        data: { selectedClass: selectedClass },
+                        success: function (Fees) {
+                            var selectedFees = $('#amount');
+                            selectedFees.empty();
+                            $('#amount').val(parseFloat(Fees.ClassFees));                        },
+                        error: function (error) {
+                            console.log("error:", error);
+                         }
+                     });
+                   });
 
         $(document).ready(function(){
+            var dateNow = new Date().toISOString().split('T')[0];
+            $('#payment_date').attr('max', dateNow);
 
             $('#amount, #paid').on('input', function() {
                 var x = parseFloat($('#amount').val());
@@ -332,18 +368,17 @@
                             var student = $('#student').val();
                             var payment_date = $('#payment_date').val();
                             var payment_reference = $('#payment_reference').val();
-                            var amount = $('#amount').val();
                             var paid = $('#paid').val();
                             var left_to_pay = $('#left_to_pay').val();
                             var payment_status = $('#payment_status').val();
                             var payment_method = $('#payment_method').val();
+                            var classe = $('#classe').val();
                             sweet();
                                 $.ajax({
                                     'type':'POST',
                                     'url': '/fees/save',
                                     data:{
                                         cmd:parseInt(cmd),
-                                        amount:amount,
                                         payment_reference:payment_reference,
                                         payment_date:payment_date,
                                         paid:paid,
@@ -351,6 +386,7 @@
                                         payment_status:payment_status,
                                         payment_method:payment_method,
                                         studentID:parseInt(student),
+                                        classID:parseInt(classe),
                                         },
                                     dataType:'json',
                                     headers:{'X-CSRF-Token':csrfToken},

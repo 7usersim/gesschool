@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGeneralsTable extends Migration
+class CreateEvaluationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateGeneralsTable extends Migration
      */
     public function up()
     {
-        Schema::create('gsc_general', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('x_id');
-            $table->foreign('x_id')->references('id')->on('gsc_etablissement')->onDelete('cascade');
+        Schema::create('gsc_evaluation', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->unique;
+            $table->string('code')->unique;
+            $table->date('starting_date')->unique;
+            $table->date('ending_date')->unique;
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateGeneralsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('generals');
+        Schema::dropIfExists('gsc_evaluation');
     }
 }

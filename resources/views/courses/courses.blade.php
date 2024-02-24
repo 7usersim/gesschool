@@ -26,6 +26,7 @@
                     <th scope="col">Credit</th>
                     <th scope="col">Classe</th>
                     <th scope="col">Course</th>
+                    <th scope="col">Teacher</th>
                     <th scope="col">Options</th>
                   </tr>
                 </thead>
@@ -52,7 +53,7 @@
                 @csrf
                 <input type="hidden" name="cmd" id="cmd" value="0">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="class">{{__(" Class name")}}</label>
                         <select name="classe" id="classe" class="form-control">
                             <option value=""  disabled selected>{{__('Select a class') }}</option>
@@ -61,7 +62,7 @@
                             @endforeach
                         </select>
                      </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="courses">{{__(" Course name")}}</label>
                         <select name="course" id="course" class="form-control">
                             <option value="" selected disabled>{{__('Select course') }} </option>
@@ -70,10 +71,20 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="form-group col-md-4">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label for="credit ">{{__('Credit')  }}</label>
                         <input type="number" name="credit" required class="form-control" id="credit" placeholder="{{__('Enter value')}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="teacher">{{__(" teacher name")}}</label>
+                        <select name="teacher" id="teacher" class="form-control">
+                            <option value="" selected disabled>{{__('Select teacher') }} </option>
+                            @foreach ($TeacherList as $teacher)
+                                <option value="{{$teacher->id}}">{{$teacher->first_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                     <div class="modal-footer">
@@ -110,6 +121,7 @@
             {'data':'credit'},
             {'data':'class'},
             {'data':'course'},
+            {'data':'teacher'},
             {'data':'options'}
         ]
     });
@@ -137,6 +149,7 @@ var t;
         $('#classe').val('');
         $('#course').val('');
         $('#credit').val('');
+        $('#teacher').val('');
         $('#cmd').val('');
 
          }
@@ -146,6 +159,7 @@ var t;
         $('#classe').val(courses.ClasseID);
         $('#course').val(courses.CoursesId);
         $('#credit').val(courses.Credit);
+        $('#teacher').val(courses.TeacherID);
         $('#cmd').val(courses.id);
         $('#formFieldID').modal({show:true, keyboard:false, backdrop:'static'});
     }
@@ -177,6 +191,7 @@ var t;
                             var course = $('#course').val();
                             var classe = $('#classe').val();
                             var credit = $('#credit').val();
+                            var teacher = $('#teacher').val();
                             var cmd = $('#cmd').val();
                             sweet();
                                 $.ajax({
@@ -187,6 +202,7 @@ var t;
                                         credit:credit,
                                         courseID:parseInt(course),
                                         classID:parseInt(classe),
+                                        TeacherID:parseInt(teacher),
                                         },
                                     dataType:'json',
                                     headers:{'X-CSRF-Token':csrfToken},

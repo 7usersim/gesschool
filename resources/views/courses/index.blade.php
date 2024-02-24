@@ -24,7 +24,6 @@
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Teacher</th>
                     <th scope="col">code</th>
                     <th scope="col">Description</th>
                     <th scope="col">Options</th>
@@ -53,18 +52,10 @@
                 @csrf
                 <input type="hidden" name="cmd" id="cmd" value="0">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <label for="name">Name</label>
                         <input type="text" name="name" required class="form-control" id="name" placeholder="{{__('Enter value')}}">
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="teacher">{{__(" Teacher name")}}</label>
-                        <select name="teacher" id="teacher" class="form-control">
-                            @foreach ($TeacherLists as $teacher)
-                                <option value="{{$teacher->id}}">{{$teacher->first_name}}</option>
-                            @endforeach
-                        </select>
-                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -75,8 +66,6 @@
                         <label for="description "> description</label>
                         <input type="text" name="desciption" required class="form-control" id="description" placeholder="{{__('Enter value')}}">
                       </div>
-
-
                           </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-primary save">{{__(" Save")}}</button>
@@ -110,7 +99,6 @@
         },
         columns:[
             {'data':'name'},
-            {'data':'teacher'},
             {'data':'code'},
             {'data':'description'},
             {'data':'options'}
@@ -141,7 +129,6 @@ var t;
         $('#code').val('');
         $('#description').val('');
         $('#cmd').val('');
-        $('#teacher').val('');
 
          }
 
@@ -149,7 +136,6 @@ var t;
         $('#cmd').val(courses.id);
         $('#name').val(courses.NameCourse);
         $('#code').val(courses.Code);
-        $('#teacher').val(courses.TeacherId);
         $('#description').val(courses.Description);
         $('#formFieldID').modal({show:true, keyboard:false, backdrop:'static'});
     }
@@ -180,7 +166,6 @@ var t;
                         if(result.value === true){
                             var name = $('#name').val();
                             var code = $('#code').val();
-                            var teacher = $('#teacher').val();
                             var cmd = $('#cmd').val();
                             var description = $('#description').val();
                             sweet();
@@ -192,7 +177,6 @@ var t;
                                         name:name,
                                         code:code,
                                         description:description,
-                                        teacherID:parseInt(teacher),
                                         },
                                     dataType:'json',
                                     headers:{'X-CSRF-Token':csrfToken},

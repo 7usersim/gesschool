@@ -31,7 +31,7 @@ class Filiere extends Model
     }
 
     public function Student(){
-        $this->hasMany("App\Models\Student",'id_cycle' );
+        return  $this->hasMany("App\Models\Student",'id_cycle' );
 
       }
 

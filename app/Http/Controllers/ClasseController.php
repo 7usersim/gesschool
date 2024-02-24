@@ -41,7 +41,7 @@ class ClasseController extends Controller
         if($request->ajax()){
             $columns = array(
                 0=>'c.name',
-                1=>'c.capacity',
+                1=>'c.school_fees',
                 2=>'f.nom',
                 3=> 'u.first_name'
             );
@@ -57,7 +57,7 @@ class ClasseController extends Controller
 
             if(!empty($request->input('search.value'))){
                 $get_search = $request->input('search.value');
-                $req .= ' AND (c.id LIKE "%'. htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.capacity LIKE "%'.htmlspecialchars($get_search).'%" OR f.nom LIKE "%'.htmlspecialchars($get_search).'%" OR u.first_name LIKE "%'.htmlspecialchars($get_search).'%")';
+                $req .= ' AND (c.id LIKE "%'. htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.school_fees LIKE "%'.htmlspecialchars($get_search).'%" OR f.nom LIKE "%'.htmlspecialchars($get_search).'%" OR u.first_name LIKE "%'.htmlspecialchars($get_search).'%")';
             }
 
             $req .= ' ORDER BY '. $order.' '.$dir.' LIMIT '.$limit. ' OFFSET '. $start;
@@ -73,7 +73,7 @@ class ClasseController extends Controller
             if(!is_null($listUsers)){
                 foreach($listUsers as $item){
                     $needData['name'] = $item->NameClass;
-                    $needData['capacity'] = $item->Capacity;
+                    $needData['school_fees'] = $item->SchoolFees;
                     $needData['field'] = $item->NameField;
                     $needData['titulaire'] = $item->NameUser;
                     $needData['options'] = "<a href='#' title=' Update field' onclick='edit(".json_encode($item).")' class='btn btn-sm btn-primary btnUpdate'> <i class='fa fa-edit'></i> Edit</a> ";
@@ -96,14 +96,14 @@ class ClasseController extends Controller
          $id = intval($request->get("cmd"));
         if(intval($request->get("cmd")) != 0){
             $v = \Validator::make($request->all(),[
-                "capacity"=>"required|integer|min:1|max:100",
+                "schoolFees"=>"required|integer|min:1",
                 "titulaireID"=>"required",
                 "fieldID"=>"required",
                 "name"=>"required|max:20|unique:gsc_classes,name,".intval($request->get('cmd')),
             ]);
         }else{
             $v = \Validator::make($request->all(),[
-                "capacity"=>"required|integer|min:1|max:100",
+                "schoolFees"=>"required|integer|min:1",
                 "titulaireID"=>"required",
                 "fieldID"=>"required",
                 "name"=>"required|max:20|unique:gsc_classes,name",
@@ -126,7 +126,7 @@ class ClasseController extends Controller
             // $classe = new Classes();
             $classe->field_id = $request->get("fieldID");
             $classe->user_id = $request->get("titulaireID");
-            $classe->capacity = $request->get("capacity");
+            $classe->school_fees = $request->get("schoolFees");
             $classe->name = $request->get("name");
 
             $classe->save();

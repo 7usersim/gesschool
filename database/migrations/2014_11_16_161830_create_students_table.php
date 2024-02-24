@@ -14,7 +14,7 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('gsc_students', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('matricule');
             $table->string('firstname')->unique();
             $table->string('lastname')->unique();
@@ -40,6 +40,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('gsc_students');
     }
 }

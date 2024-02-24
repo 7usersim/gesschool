@@ -10,21 +10,29 @@ class Student extends Model
     protected $table = 'gsc_students';
 
     public function cycle(){
-       $this->hasOne("App\Models\Cycle",'id_cycle' );
+        return $this->hasOne("App\Models\Cycle",'id_cycle' );
 
      }
 
     public function classe(){
-       $this->hasOne("App\Models\Classes",'id_cycle' );
+        return $this->hasOne("App\Models\Classes",'id_cycle' );
 
      }
 
     public function Field(){
-       $this->hasOne("App\Models\Classes",'id_cycle' );
+        return $this->hasOne("App\Models\Classes",'id_cycle' );
 
      }
     public function Fees(){
-       $this->hasOne("App\Models\FraisDeScolarite",'student_id' );
+        return $this->hasOne("App\Models\FraisDeScolarite",'student_id' );
 
      }
+
+     public function Note(){
+        return $this->hasOne('App\Models\Note','id_student');
+
+    }
+
+
+
 }

@@ -14,7 +14,7 @@ class CreateRolesTable extends Migration
     public function up()
     {
         Schema::create('gsc_roles', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('role_name');
             $table->string('code_role');
             $table->enum('status_role',['Actif','Inactif']);
@@ -28,6 +28,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('gsc_roles');
     }
 }

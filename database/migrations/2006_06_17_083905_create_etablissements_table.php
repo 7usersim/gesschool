@@ -38,6 +38,6 @@ class CreateEtablissementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etablissements');
+        Schema::dropIfExists('gsc_etablissement');
     }
 }

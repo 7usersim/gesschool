@@ -16,7 +16,7 @@ class CreateClassesTable extends Migration
         Schema::create('gsc_classes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('capacity');
+            $table->integer('school_fees');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('gsc_users')->onDelete('cascade');
             $table->unsignedBigInteger('field_id');
@@ -32,6 +32,6 @@ class CreateClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('gsc_classes');
     }
 }

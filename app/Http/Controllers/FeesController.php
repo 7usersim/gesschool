@@ -22,15 +22,15 @@ class FeesController extends Controller
     public function index(){
         $studentList = Student::select('id', 'matricule')->get();
         $cycleList = Cycle::select('id', 'name')->get();
-        // $fieldList = Filiere::select('id', 'nom')->get();
         $classeList = Classes::select('id', 'name')->get();
         return view('fees.index',compact("cycleList","studentList","classeList"));
     }
    public function Historique(){
     return view("fees.historique");
    }
-    public function listHistorique(){
-        $historique = FraisDeScolarite::select('id','historique')->get();
+    public function listHistorique(Request $request){
+        $id = intval($request->id);
+        $historique = FraisDeScolarite::where('student_id', '=', $id )->first();
         // dd($historique);
         return response()->json([
             'ListHistorique'=>$historique,
@@ -49,13 +49,12 @@ class FeesController extends Controller
     public function getlistFees(Request $request){
         if($request->ajax()){
             $columns = array(
-                0=>'f.amount',
-                1=>'f.paid',
-                2=>'f.left_to_paid',
-                3=>'f.payment_status',
-                4=> 'f.payment_method',
-                5=> 's.firstname',
-                6=> 's.lastname',
+                0=>'f.paid',
+                1=>'f.left_to_paid',
+                2=>'f.payment_status',
+                3=> 'f.payment_method',
+                4=> 's.firstname',
+                5=> 's.lastname',
             );
 
             $totalData = FraisDeScolarite::count();
@@ -68,7 +67,7 @@ class FeesController extends Controller
 
             if(!empty($request->input('search.value'))){
                 $get_search = $request->input('search.value');
-                $req .= ' AND (f.id LIKE "%'. htmlspecialchars($get_search).'%" OR s.id LIKE "%'.htmlspecialchars($get_search).'%" OR f.amount LIKE "%'.htmlspecialchars($get_search).'%" OR f.paid LIKE "%'.htmlspecialchars($get_search).'%" OR f.left_to_pay LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_date LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_method LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_satus LIKE "%'.htmlspecialchars($get_search).'%"OR s.firstname LIKE "%'.htmlspecialchars($get_search).'%"OR s.lastname LIKE "%'.htmlspecialchars($get_search).'%"OR s.sexe LIKE "%'.htmlspecialchars($get_search).'%"OR f.payment_reference LIKE "%'.htmlspecialchars($get_search).'%")';
+                $req .= ' AND (f.id LIKE "%'. htmlspecialchars($get_search).'%" OR s.id LIKE "%'.htmlspecialchars($get_search).'%" OR f.paid LIKE "%'.htmlspecialchars($get_search).'%" OR f.left_to_pay LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_date LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_method LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_status LIKE "%'.htmlspecialchars($get_search).'%"OR s.firstname LIKE "%'.htmlspecialchars($get_search).'%"OR s.lastname LIKE "%'.htmlspecialchars($get_search).'%"OR s.sexe LIKE "%'.htmlspecialchars($get_search).'%" OR f.payment_reference LIKE "%'.htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.id LIKE "%'.htmlspecialchars($get_search).'%" OR c.school_fees LIKE "%'.htmlspecialchars($get_search).'%")';
             }
 
             $req .= ' ORDER BY '. $order.' '.$dir.' LIMIT '.$limit. ' OFFSET '. $start;
@@ -81,7 +80,6 @@ class FeesController extends Controller
 
             if(!is_null($listPay)){
                 foreach($listPay as $item){
-                    $needData['amount'] = $item->Amount.' '.'xaf';
                     $needData['paid'] = $item->Paid.' '.'xaf';
                     $needData['left_to_pay'] = $item->LeftToPay.' '.'xaf';
                     $needData['payment_date'] = $item->PaymentDate;
@@ -99,9 +97,12 @@ class FeesController extends Controller
                         $needData['payment_status'] = "<span class='badge badge-warning'>". $item->PaymentStatus."</span>";
                     }
                     $needData['student'] = $item->StudentFirstname.' '. $item->StudentLastname;
+                    $needData['class'] = $item->NameClass;
                     $needData['payment_reference'] = $item-> PaymentReference;
                     $needData['sexe'] = $item->StudentSexe;
-                    $needData['options'] = "<a href='#' title=' Update field' onclick='edit(".json_encode($item).")' class='btn btn-sm btn-primary btnUpdate'> <i class='fa fa-edit'></i> Edit</a> ";
+                    $needData['options'] = "
+                    <a href='#' title=' historique' onclick='historique(".json_encode($item).")' class='btn btn-sm btn-secondary'> <i class='fa fa-eye'></i> Historique</a>
+                     ";
 
                     $data[] = $needData;
                 }
@@ -119,33 +120,33 @@ class FeesController extends Controller
     }
 
     public function save(Request $request){
-
         $id = intval($request->cmd);
-        // dd($id);
+
         if($id > 0){
-            $V = \Validator::make($request->all(),[
-                "amount"=>"required|numeric|min:0",
-                "studentID"=>"required|numeric|unique:gsc_frais,student_id,".$id,
-                "paid"=>"required|numeric|min:0",
-                "left_to_pay"=>"required|numeric|min:0",
-                "payment_date"=>"required",
-                "payment_method"=>"required",
-                "payment_reference"=>"required|numeric",
-                "payment_status"=>"required",
+            $V = \Validator::make($request->all(), [
+            "classID" => "required|numeric",
+            "studentID" => "required|numeric",
+            "paid" => "required|numeric|min:0",
+            "left_to_pay" => "required|numeric|min:0",
+            "payment_date" => "required",
+            "payment_method" => "required",
+            "payment_reference" => "required|numeric",
+            "payment_status" => "required",
+
             ]);
         } else {
-            $V = \Validator::make($request->all(),[
-                "amount"=>"required|numeric|min:0",
-                "studentID"=>"required|numeric|unique:gsc_frais,student_id,".$id,
-                "paid"=>"required|numeric|min:0",
-                "left_to_pay"=>"required|numeric",
-                "payment_date"=>"required",
-                "payment_method"=>"required",
-                "payment_reference"=>"required|numeric",
-                "payment_status"=>"required",
+            $V = \Validator::make($request->all(), [
+            "classID" => "required|numeric",
+            "studentID" => "required|numeric",
+            "paid" => "required|numeric|min:0",
+            "left_to_pay" => "required|numeric|min:0",
+            "payment_date" => "required",
+            "payment_method" => "required",
+            "payment_reference" => "required|numeric",
+            "payment_status" => "required",
 
             ]);
-               }
+        }
 
         if ($V->fails()) {
             return response()->json([
@@ -155,27 +156,29 @@ class FeesController extends Controller
         }
 
         try {
-            if ($id > 0) {
+            $studentID = $request->get("studentID");
 
-                $payment = FraisDeScolarite::where('id', '=', $id)->first();
+            $existingPayment = FraisDeScolarite::where('student_id', '=', $studentID)->first();
+
+            if ($existingPayment) {
+                $payment = $existingPayment;
             } else {
                 $payment = new FraisDeScolarite();
             }
-            $payment->student_id = $request->get("studentID");
-            $payment->amount = $request->get("amount");
+
+            $payment->student_id =$request->get('studentID');
+            $payment->class_id =$request->get('classID');
             $payment->paid = $request->get("paid");
             $payment->left_to_pay = $request->get("left_to_pay");
             $payment->payment_date = $request->get("payment_date");
             $payment->payment_method = $request->get("payment_method");
             $payment->payment_reference = $request->get("payment_reference");
             $payment->payment_status = $request->get("payment_status");
-            // $payment->save();
 
             $historiquePaiements = json_decode($payment->historique, true) ?? [];
-
             $nouvelHistorique = [
                 "student_id" => $payment->student_id,
-                "amount" => $payment->amount,
+                "class_id" => $payment->class_id,
                 "paid" => $payment->paid,
                 "left_to_pay" => $payment->left_to_pay,
                 "payment_date" => $payment->payment_date,
@@ -183,12 +186,9 @@ class FeesController extends Controller
                 "payment_reference" => $payment->payment_reference,
                 "payment_status" => $payment->payment_status
             ];
-
             $historiquePaiements[] = $nouvelHistorique;
+            $payment->historique = json_encode($historiquePaiements);
 
-            $nouvelHistoriqueJSON = json_encode($historiquePaiements);
-
-            $payment->historique = $nouvelHistoriqueJSON;
             $payment->save();
 
             $stat = ($id == 0) ? "done" : "update";
@@ -207,6 +207,8 @@ class FeesController extends Controller
     }
 
 
+
+
     public function getFiliereByCycle(Request $request){
         $fieldList = Filiere::where('cycle_id','=',intval($request->get('optionA')))->get();
         // dd($fieldList);
@@ -217,13 +219,24 @@ class FeesController extends Controller
     }
 
     public function getStudentsByClasses(Request $request){
-        $studentList = Student::where('id_classe','=',intval($request->get('selectedClass')))->get();
-        // dd($fieldList);
+        $studentList = Student::where('id_classe','=',intval($request->get('selectedClass')))->orderBy('lastname')->get();
         return response()->json([
             'studentList'=>$studentList,
             'error' => false
         ], 200);
     }
+
+    public function getFeesByClasses(Request $request){
+
+        $id = intval($request->selectedClass);
+        $ClassFees = Classes::where('id', $id)->value('school_fees');
+        // dd($studentList);
+        return response()->json([
+            'ClassFees'=>$ClassFees,
+            'error' => false
+        ], 200);
+    }
+
 
     public function getClassByField(Request $request){
 

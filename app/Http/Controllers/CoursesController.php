@@ -16,9 +16,8 @@ class CoursesController extends Controller
         $this->middleware('is_admin');
     }
     public function index(){
-        $TeacherLists = User::select('id', 'first_name')->get();
 
-        return view('courses.index',compact("TeacherLists"));
+        return view('courses.index');
     }
 
     public function getlistCourses(Request $request){
@@ -27,7 +26,6 @@ class CoursesController extends Controller
                 0=>'c.name',
                 1=>'c.code',
                 2=>'c.description',
-                3=>'u.first_name'
             );
 
             $totalData = Courses::count();
@@ -41,16 +39,13 @@ class CoursesController extends Controller
 
             if(!empty($request->input('search.value'))){
                 $get_search = $request->input('search.value');
-                $req .= ' AND (c.id LIKE "%'. htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.code LIKE "%'.htmlspecialchars($get_search).'%" OR c.description LIKE "%'.htmlspecialchars($get_search).'%" OR u.id LIKE "%'.htmlspecialchars($get_search).'%" OR u.first_name LIKE "%'.htmlspecialchars($get_search).'%")';
+                $req .= ' AND (c.id LIKE "%'. htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.code LIKE "%'.htmlspecialchars($get_search).'%" OR c.description LIKE "%'.htmlspecialchars($get_search).'%")';
             }
 
             $req .= ' ORDER BY '. $order.' '.$dir.' LIMIT '.$limit. ' OFFSET '. $start;
-            // dd($req);
             $listCourses = DB::select($req);
-            // dd($listUsers);
-
+            
             $totalFiltered = count($listCourses);
-            // dd($totalFiltered);
 
             $data = array();
 
@@ -58,7 +53,6 @@ class CoursesController extends Controller
                 foreach($listCourses as $item){
                     $needData['name'] = $item->NameCourse;
                     $needData['code'] = $item->Code;
-                    $needData['teacher'] = $item->NameTeacher;
                     $needData['description'] = $item->Description;
                     $needData['options'] = "<a href='#' title=' Update field' onclick='edit(".json_encode($item).")' class='btn btn-sm btn-primary btnUpdate'> <i class='fa fa-edit'></i> Edit</a> ";
                     $data[] = $needData;
@@ -81,14 +75,12 @@ class CoursesController extends Controller
         if(intval($request->get("cmd")) > 0){
             $v = \Validator::make($request->all(),[
                 "name"=>"required|min:1|max:100|unique:gsc_courses,name,".$id,
-                "teacherID"=>"required",
                 "code"=>"required|unique:gsc_courses,code,".$id,
                 "description"=>"required|max:20|",
             ]);
         }else{
             $v = \Validator::make($request->all(),[
                 "name"=>"required|min:1|max:100|unique:gsc_courses,name",
-                "teacherID"=>"required",
                 "code"=>"required|unique:gsc_courses,code",
                 "description"=>"required|max:20|",
             ]);
@@ -108,12 +100,11 @@ class CoursesController extends Controller
             $courses = new Courses();
         }
             // $classe = new Classes();
-            $courses->id_teacher = $request->get("teacherID");
             $courses->code = $request->get("code");
             $courses->name = $request->get("name");
             $courses->description = $request->get("description");
 
-            $courses->save();  
+            $courses->save();
 
             $stat = ($id == 0)? "save" : "update";
 

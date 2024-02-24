@@ -28,7 +28,7 @@ class StudentController extends Controller
         return view('student.liste',compact("cycleList"));
     }
 
-    
+
 
     public function getStudent(Request $request){
        if($request->ajax()){

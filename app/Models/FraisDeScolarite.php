@@ -11,5 +11,8 @@ class FraisDeScolarite extends Model
     public function student(){
         return $this->hasMany('App\Models\Student','student_id');
     }
+    public function classes(){
+        return $this->hasMany('App\Models\Classes','class_id');
+    }
 
 }

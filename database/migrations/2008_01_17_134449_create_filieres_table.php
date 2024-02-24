@@ -14,7 +14,7 @@ class CreateFilieresTable extends Migration
     public function up()
     {
         Schema::create('gsc_filiere', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('nom');
             $table->string('code')->unique();
             $table->text('description')->nullable();
@@ -37,6 +37,6 @@ class CreateFilieresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filieres');
+        Schema::dropIfExists('gsc_filiere');
     }
 }

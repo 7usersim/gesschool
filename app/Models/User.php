@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Filiere::class);
     }
+    
+    public function Courses(){
+        return $this->hasMany('App\Models\User','teacher_id');
+    }
+
 }

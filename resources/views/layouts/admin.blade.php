@@ -658,7 +658,6 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{url('/student/liste')}}">{{__(" Lister")}}</a></li>
                                     <li><a href="{{url('/student/classlist')}}">{{__(" Classes")}}</a></li>
-
                                 </ul>
                             </li>
                             <li>
@@ -683,7 +682,27 @@
 
                                 </ul>
                             </li>
-
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-pen"></i>
+                                    <span>{{__("Exam")}}</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{url('/exam/list')}}">{{__("List")}}</a></li>
+                                    <li><a href="{{url('/notes/all')}}">{{__("List Notes")}}</a></li>
+                                    <li><a href="{{url('/evaluation/ListClassNote')}}">{{__("Search Note")}}</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-clock"></i>
+                                    <span>{{__("Time table")}}</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{url('/time/all')}}">{{__("Time table")}}</a></li>
+                                    <li><a href="{{url('/time/TimeList')}}">{{__("Time")}}</a></li>
+                                </ul>
+                            </li>
                         </ul>
 
                         <div class="sidebar-section mt-5 mb-3">

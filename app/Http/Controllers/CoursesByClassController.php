@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\ClassesCourses;
 use App\Models\Courses;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,9 +19,17 @@ class CoursesByClassController extends Controller
     }
     public function index(){
         $classList = Classes::select('id', 'name')->get();
-        $courseList = Courses::select('id', 'name')->get();
 
-        return view('courses.courses',compact("classList","courseList"));
+        // $req= "SELECT * FROM gsc_users
+        //  INNER JOIN gsc_roles ON gsc_users.roles_id = gsc_roles.id
+        //  WHERE gsc_roles.role_name = 'ENSEIGNANT' ";
+        //  $TeacherList = DB::select($req);
+        //  dd($result);
+
+        $courseList = Courses::select('id', 'name')->get();
+        $TeacherList = User::select('id', 'first_name')->get();
+
+        return view('courses.courses',compact("classList","courseList","TeacherList"));
     }
 
     public function getlistCoursesByClass(Request $request){
@@ -28,7 +37,8 @@ class CoursesByClassController extends Controller
             $columns = array(
                 0=>'m.credit',
                 1=>'c.name',
-                2=>'cl.name'
+                2=>'cl.name',
+                3=>'u.firstname'
             );
 
             $totalData = ClassesCourses::count();
@@ -42,7 +52,7 @@ class CoursesByClassController extends Controller
 
             if(!empty($request->input('search.value'))){
                 $get_search = $request->input('search.value');
-                $req .= ' AND (m.id LIKE "%'. htmlspecialchars($get_search).'%" OR m.credit LIKE "%'.htmlspecialchars($get_search).'%" OR cl.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.id LIKE "%'.htmlspecialchars($get_search).'%")';
+                $req .= ' AND (m.id LIKE "%'. htmlspecialchars($get_search).'%" OR m.credit LIKE "%'.htmlspecialchars($get_search).'%" OR cl.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.name LIKE "%'.htmlspecialchars($get_search).'%" OR c.id LIKE "%'.htmlspecialchars($get_search).'%  OR u.firs_name LIKE "%'.htmlspecialchars($get_search).'%"  OR u.last_name LIKE "%'.htmlspecialchars($get_search).'%)';
             }
 
             $req .= ' ORDER BY '. $order.' '.$dir.' LIMIT '.$limit. ' OFFSET '. $start;
@@ -60,6 +70,7 @@ class CoursesByClassController extends Controller
                     $needData['credit'] = $item->Credit;
                     $needData['class'] = $item->NameClass;
                     $needData['course'] = $item->NameCourse;
+                    $needData['teacher'] = $item->FirstNameTeacher;
                     $needData['options'] = "<a href='#' title=' Update courses' onclick='edit(".json_encode($item).")' class='btn btn-sm btn-primary btnUpdate'> <i class='fa fa-edit'></i> Edit</a> ";
                     $data[] = $needData;
                 }
@@ -83,12 +94,15 @@ class CoursesByClassController extends Controller
                 "credit"=>"required|min:1|max:8",
                 "courseID"=>"required",
                 "classID"=>"required",
+                "TeacherID"=>"required",
             ]);
         }else{
             $v = \Validator::make($request->all(),[
                 "credit"=>"required|min:1|max:8",
                 "courseID"=>"required",
                 "classID"=>"required",
+                "TeacherID"=>"required",
+
             ]);
         }
 
@@ -99,6 +113,18 @@ class CoursesByClassController extends Controller
             ], 404);
         }
 
+        $courseID = $request->get("courseID");
+        $classID = $request->get("classID");
+        $existingCourses = ClassesCourses::where('course_id', $courseID)->where('class_id', $classID)->first();
+
+        if( $existingCourses){
+             $courses =  $existingCourses;
+             return response()->json([
+                'message'=> ['the course already exists '],
+                'error'=> true
+            ], 404);
+        }
+        
         try{
             if($id > 0){
             $courses = ClassesCourses::where('id','=',$id)->first();
@@ -108,6 +134,7 @@ class CoursesByClassController extends Controller
             $courses->course_id = $request->get("courseID");
             $courses->class_id = $request->get("classID");
             $courses->credit = $request->get("credit");
+            $courses->teacher_id = $request->get("TeacherID");
 
             $courses->save();
 
@@ -128,6 +155,7 @@ class CoursesByClassController extends Controller
 
 
     }
+
 
 
 }
